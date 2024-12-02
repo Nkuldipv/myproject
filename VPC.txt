@@ -1,0 +1,105 @@
+
+
+------------------------------------------------- VPC [Virtual Private Cload] ---------------------------------------------------------------------------
+VPC- it is like lab or office.
+subnet-it like room or cabins in office.
+
+ex.in every organiztion more than 1 servers are available. 1 is main server second 1 is for backup both
+are kept seperate for the reason of data safety. in this senario we create subnet for both server .. subnet-1. subnet-2 resp.
+
+
+
+
+
+
+VPC	- althogh the structure of vpc looks simmilar to a standerd network that you'd operate in a data center, a 
+	vpc will have the benefits of the scallable infrastucture of AWS.
+
+	>you create subnet route table, configure network gateway control network access control lists, chose ip address range and many
+	more in a virtual  private cloud. 
+	>another mojor advantage of vpc is that it is fully customizable.
+
+Internet Gateway - 
+		An internet gateway is a logical connection between amazon VPC  & the internet If vpc does not have internet gateway 
+		then the resourses in the vpc cannot be accessed from the internet. (unless the traffic flows via a cooperative network and VPN/Direct 			Connect)
+		- It means we buying a router.we use the for giving  vpc access to internet
+
+VPC Peering - 
+		A VPC  peering connection in a networking connection between two vpc's that enable you to route traffic between then using private IPv4
+		address and IPv6 Adressess.
+
+Security Group - 
+		In VPC, a security group's function is to manage the traffic for the instances. Instances  can be single in number  of many.
+		actually, it doess act as virtual firewall that can control inbound and outbound traffic from differant EC-2 Instances.
+		you can manually add rules to the each security group to control traffic within the associate instances.
+
+
+
+**VPC LIKE A OFFICE OR LAB - IN EVERY ORG 2 SERVER 1 FOR MAINN OTHER ONE IS FOR BACKUP INN THIS SENARIO WE CREATE  A SUBNET  ..  SUBNET 1 FFOR SERVER 1 SUBNET 2 IS FOR SERVER 2
+**SUBNET IS LIKE A ROOMS IN THE LAB
+**INTERNET  GATEWAY IS  ROUTER - IT MEANNS BUYING ROUTER AND AND WE USE THIS FOR ESTABLISH CONNESCTIONN BETWEEN 
+VPC TO  INTERNET..
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Step-1  Create VPC
+	> assign name [my vpc]
+	> ip address ... 10.0.0.0/16
+	In  aws we can assing IP Between in 16 to 28
+	>secect class ABC
+	>Tenacy[Default,Dedicated]
+	create vpc.
+
+Step-2  Create Subnet [we cant create 2 subnet in 1 availability zone]
+	assign name 
+	seelect avaibility zone -1a
+	subnet cidr block ---- 10.0.0.0/28 ...for subnet 2 ... 10.0.1.0/28 ... for subnet 3 ... 10.0.2.0/28
+	[if we have multiple subnet or room we cant assign same range ip address for both room or lab]
+
+Step-3 Internet Gateway [Creating Router]
+	asssign name 
+	create Internet Gateway
+	attach to VPC
+	select VPC 
+	Attach to VPC
+
+Step-3 Route Table 
+	select VPC 
+	route >> edit route 
+		>add route 
+	>0.0.0.0/0 	>internetgateway
+			>igw- 06g -- our isp or wifi router 
+	
+	
+	
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+step1:- search vpc service on search bar
+
+-click on your vpc
+-click on create vpc
+-cllick on vpc only
+-select (IPV4 CIDR manual input) ---> because i am using ipv4 ip address 
+-ipv4 cidr (Example :- 10.0.0.0/16) 
+-Tenancy :- you can select default or dedicated, in simple word default means hardware resource are share from network, and dedicated means no hardware share  
+-click on create vpc
+
+step 2 :-create subnet,but what is subnetting ? ----> in simple word subnetting is a process of provide specific range  of ip address to network for example my network id is 10.0.0.0/16 it means i can asssign ip address to 65,000 users but in my office i want only 8 ip address so i am use this subnet 10.0.0.0/29 
+
+ click on subnets
+-vpc ID (select your vpc)
+-subnet name :- type any name (Example:- subnet1)
+-avialability zone :- Example us-east-2a
+-ipv4 cidr block :- 10.0.0.0/24 
+
+Step 3:- Internet Gateway (it means we are purchess router for access internet)
+-cleak on internet gateway
+-name :- my router
+-create a internet gateway
+-click on attach to a vpc 
+-select your vpc and click on attach
+
+step 3 :- in this step add entry in route table,without this step user can't access internet because in this step create connectivity between isp router and own router.
+
+-select your routing table 
+-click on routes--> edit router ---> 0.0.0.0 ---> select internet gateway --> save 
